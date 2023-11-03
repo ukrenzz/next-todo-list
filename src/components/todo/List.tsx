@@ -16,15 +16,30 @@ export interface ITodoListProps {
 const useReadTasks = () => {
     const url = "/api/todos";
 
-    const { data, isLoading, error } = useSWR(url, getFetcher, {
+    const { data, isLoading, error, mutate } = useSWR(url, getFetcher, {
         refreshInterval: 1000,
     });
 
-    return { tasks: data, isLoading, taskError: error };
+    return { tasks: data, isLoading, taskError: error, mutate };
 };
 
 const TodoList = ({ onEdit, onDelete, onComplete }: ITodoListProps) => {
-    const { tasks, isLoading, taskError } = useReadTasks();
+    const { tasks, isLoading, taskError, mutate } = useReadTasks();
+
+    const handleEdit = (todo: TodoType) => {
+        if (onEdit) onEdit(todo);
+        mutate();
+    };
+
+    const handleDelete = (todo: TodoType) => {
+        if (onDelete) onDelete(todo);
+        mutate();
+    };
+
+    const handleComplete = (todo: TodoType) => {
+        if (onComplete) onComplete(todo);
+        mutate();
+    };
 
     return (
         <div className="relative">
@@ -40,19 +55,6 @@ const TodoList = ({ onEdit, onDelete, onComplete }: ITodoListProps) => {
                     >
                         <div className="text-white font-medium">
                             <CheckTodo todo={todo} onComplete={onComplete} />
-                            {/* <Checkbox
-                                radius="sm"
-                                color="success"
-                                lineThrough
-                                isSelected={todo.isComplete == 1}
-                                value={todo.id.toString()}
-                                classNames={{
-                                    label: "ml-2 text-white before:bg-gray-500 ",
-                                    icon: "text-white",
-                                }}
-                            >
-                                {todo.task}
-                            </Checkbox> */}
                         </div>
                         <div className="flex gap-2">
                             <ActionButton
@@ -60,9 +62,7 @@ const TodoList = ({ onEdit, onDelete, onComplete }: ITodoListProps) => {
                                 color="success"
                                 icon={<i className="ri-check-line text-lg"></i>}
                                 isIconOnly
-                                onClick={() =>
-                                    onComplete ? onComplete(todo) : {}
-                                }
+                                onClick={() => handleComplete(todo)}
                             />
                             <ActionButton
                                 text="Edit"
@@ -71,7 +71,7 @@ const TodoList = ({ onEdit, onDelete, onComplete }: ITodoListProps) => {
                                     <i className="ri-pencil-line text-lg"></i>
                                 }
                                 isIconOnly
-                                onClick={() => (onEdit ? onEdit(todo) : {})}
+                                onClick={() => handleEdit(todo)}
                             />
                             <ActionButton
                                 text="Delete"
@@ -80,7 +80,7 @@ const TodoList = ({ onEdit, onDelete, onComplete }: ITodoListProps) => {
                                     <i className="ri-delete-bin-2-line text-lg"></i>
                                 }
                                 isIconOnly
-                                onClick={() => (onDelete ? onDelete(todo) : {})}
+                                onClick={() => handleDelete(todo)}
                             />
                         </div>
                     </div>

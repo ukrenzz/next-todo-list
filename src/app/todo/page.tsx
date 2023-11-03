@@ -60,6 +60,7 @@ function TodoPage() {
         value?: TodoType
     ) => {
         e.preventDefault();
+        
     };
 
     const handleEdit = (value: TodoType) => {
@@ -93,50 +94,6 @@ function TodoPage() {
 
         setTodo(undefined);
     };
-
-    // const handleSubmit = (e) => {
-    //     e.preventDefault();
-
-    //     if (edit) {
-    //         const editTodo = todos.find((i) => i.id === edit);
-    //         const updateTodos = todos.map((td) =>
-    //             td.id === editTodo.id
-    //                 ? (td = { id: td.id, todo })
-    //                 : { id: td.id, todo: td.todo }
-    //         );
-    //         setTodos(updateTodos);
-    //         setEdit(0);
-    //         setTodo("");
-    //         return;
-    //     }
-
-    //     if (todo !== "") {
-    //         setTodos([{ id: `${todo}`, todo }, ...todos]);
-    //         setTodo("");
-    //     }
-    // };
-
-    // const handleDelete = (id) => {
-    //     const delTodo = todos.filter((to) => to.id !== id);
-    //     setTodos([...delTodo]);
-    // };
-
-    // const handleEdit = (id) => {
-    //     const editTodo = todos.find((i) => i.id === id);
-    //     setTodo(editTodo.todo);
-    //     setEdit(id);
-    // };
-
-    // const completeTodo = (id) => {
-    //     console.log("terpanggil", id);
-    //     const updateTodos = todos.map((todo) => {
-    //         if (todo.id === id) {
-    //             return { ...todo, isComplete: !todo.isComplete };
-    //         }
-    //         return todo;
-    //     });
-    //     setTodos(updateTodos);
-    // };
 
     return (
         <div className=" bg-slate-200 relative w-full h-fit flex justify-center items-start  py-16">
