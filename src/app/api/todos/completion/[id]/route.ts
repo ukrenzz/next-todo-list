@@ -9,7 +9,7 @@ export async function PUT(request: NextRequest, { params }: any) {
         const { isComplete } = await request.json();
 
         const updateResult = await pool.query(
-            "UPDATE tasks SET is_complete = ? WHERE id = ?",
+            "UPDATE tasks SET isComplete = ? WHERE id = ?",
             [isComplete ? 1 : 0, params.id]
         );
 

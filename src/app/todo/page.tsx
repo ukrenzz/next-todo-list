@@ -1,6 +1,7 @@
 "use client";
 import TodoForm from "@/components/todo/Form";
 import TodoList from "@/components/todo/List";
+import LoadingBox from "@/components/todo/LoadingBox";
 import { getFetcher } from "@/libs/fetcher";
 import { TodoType } from "@/types/todo";
 import React, { useEffect, useState } from "react";
@@ -10,47 +11,39 @@ const defaultTodo: TodoType[] = [
     {
         id: 1,
         task: "Coba 1",
-        isComplete: false,
+        isComplete: 0,
     },
     {
         id: 2,
         task: "Coba 2",
-        isComplete: true,
+        isComplete: 1,
     },
     {
         id: 3,
         task: "Coba 3",
-        isComplete: false,
+        isComplete: 0,
     },
     {
         id: 4,
         task: "Coba 4",
-        isComplete: false,
+        isComplete: 0,
     },
     {
         id: 5,
         task: "Coba 5",
-        isComplete: false,
+        isComplete: 0,
     },
     {
         id: 6,
         task: "Coba 6",
-        isComplete: false,
+        isComplete: 0,
     },
     {
         id: 7,
         task: "Coba 7",
-        isComplete: false,
+        isComplete: 0,
     },
 ];
-
-const useReadTasks = () => {
-    const url = "/api/todos";
-
-    const { data, isLoading, error } = useSWR(url, getFetcher);
-
-    return { tasks: data, isLoading, error };
-};
 
 const handleReadTask = () => {};
 const handleCreateTask = () => {};
@@ -59,42 +52,47 @@ const handleDeleteTask = () => {};
 const handleCompleteTask = () => {};
 
 function TodoPage() {
-    const [todos, setTodos] = useState<TodoType[]>(defaultTodo);
     const [todo, setTodo] = useState<TodoType>();
     const [isEdit, setIsEdit] = useState<boolean>(false);
-
-    const { tasks, isLoading, error } = useReadTasks();
 
     const handleSubmit = (
         e: React.FormEvent<HTMLFormElement>,
         value?: TodoType
     ) => {
         e.preventDefault();
-
-        if (value) setTodos([...todos, value]);
-
-        console.log(todos);
     };
 
     const handleEdit = (value: TodoType) => {
         setTodo(value);
-        console.log("TeST");
-        console.log(todo);
-        console.log(value);
+        setIsEdit(true);
     };
 
-    const handleDelete = (value: TodoType) => {
-        setTodo(undefined);
+    const handleDelete = async (value: TodoType) => {
         console.log("Delete Function");
+
+        const results = await fetch(`/api/todos/${value.id}`, {
+            method: "DELETE",
+        }).then((r) => r.json());
+
+        setTodo(undefined);
     };
 
-    // TODO: Convert all isComplete tasks to boolean
-    useEffect(() => {
-        if (!isLoading && tasks != undefined) {
-            setTodos(tasks.data);
-            console.log(tasks?.data);
-        }
-    }, [tasks]);
+    const handleComplete = async (value: TodoType) => {
+        console.log(
+            "Complete Function :",
+            value.isComplete,
+            !(value.isComplete == 1)
+        );
+
+        const results = await fetch(`/api/todos/completion/${value.id}`, {
+            method: "PUT",
+            body: JSON.stringify({
+                isComplete: !(value.isComplete == 1),
+            }),
+        }).then((r) => r.json());
+
+        setTodo(undefined);
+    };
 
     // const handleSubmit = (e) => {
     //     e.preventDefault();
@@ -141,9 +139,9 @@ function TodoPage() {
     // };
 
     return (
-        <div className="relative w-full h-full flex justify-center items-start overflow-y-auto py-16">
-            <div className="relative w-1/2 min-h-[75vh] bg-gradient-to-r from-cyan-500 to-blue-500 rounded-3xl shadow-lg overflow-hidden p-14">
-                <div className="h-full">
+        <div className=" bg-slate-200 relative w-full h-fit flex justify-center items-start  py-16">
+            <div className="relative w-1/2 min-h-[75vh] h-fit bg-gradient-to-r from-cyan-500 to-blue-500 rounded-3xl shadow-lg p-14">
+                <div className="h-fit">
                     <section className="pb-10">
                         <TodoForm
                             todo={todo}
@@ -154,10 +152,9 @@ function TodoPage() {
                     <section className="relative h-full">
                         <div className="h-full">
                             <TodoList
-                                todos={todos}
                                 onEdit={handleEdit}
                                 onDelete={handleDelete}
-                                // onComplete={completeTodo}
+                                onComplete={handleComplete}
                             />
                         </div>
                     </section>

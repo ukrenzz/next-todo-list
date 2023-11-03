@@ -15,7 +15,7 @@ export async function GET() {
         return NextResponse.json(response.get());
     } catch (error: any) {
         response.updateStatus(StatusCodes.BAD_REQUEST, error.message);
-
+        console.log(error);
         return NextResponse.json(response.get(), {
             status: StatusCodes.BAD_REQUEST,
         });

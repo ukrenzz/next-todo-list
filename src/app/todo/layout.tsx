@@ -12,7 +12,7 @@ export default function TodoLayout({
 }) {
     return (
         <NextUIProvider>
-            <div className="bg-slate-200 relative min-h-screen">
+            <div className="relative min-h-screen">
                 <Navbar />
                 <main className="relative max-h-screen h-screen">
                     <div className="w-full h-full pt-20">{children}</div>

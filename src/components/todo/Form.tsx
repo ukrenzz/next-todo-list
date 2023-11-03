@@ -15,13 +15,34 @@ const TodoForm = ({ todo, isEdit, onSubmit }: ITodoFormProps) => {
 
     useEffect(() => {
         setTodoState(todo);
-    }, [todo]);
+        setIsEditState(isEdit ?? false);
+    }, [todo, isEdit]);
 
-    console.log("Test TodoForm", todoState);
-    console.log("Test TodoForm", todo);
-
-    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         if (onSubmit) onSubmit(event, todoState);
+
+        if (todo?.task != undefined)
+            if (isEditState) {
+                console.log("edit");
+                const results = await fetch(`/api/todos/${todoState?.id}`, {
+                    method: "PUT",
+                    body: JSON.stringify({
+                        task: todoState?.task,
+                    }),
+                }).then((r) => r.json());
+
+                handleClear();
+            } else {
+                console.log("add: ", todoState);
+                const results = await fetch("/api/todos", {
+                    method: "POST",
+                    body: JSON.stringify({
+                        task: todoState?.task,
+                    }),
+                });
+
+                handleClear();
+            }
     };
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -35,7 +56,7 @@ const TodoForm = ({ todo, isEdit, onSubmit }: ITodoFormProps) => {
             setTodoState({
                 id: todoState?.id ?? -1,
                 task: current,
-                isComplete: todoState?.isComplete ?? false,
+                isComplete: todoState?.isComplete ?? 0,
             });
         }
     };
