@@ -59,7 +59,7 @@ Create or make sure Docker file with following content:
 #### Build docker container
 Run following command on `next-todo-list` directory :
 
-`docker build -t next-todo-list`
+`docker build -t next-todo-list .`
 
 #### Running docker 
 After container builded, you can running docker container on Docker Desktop or command line
