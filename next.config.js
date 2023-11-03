@@ -1,15 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     reactStrictMode: true,
-    // async redirects() {
-    //     return [
-    //         {
-    //             source: "/",
-    //             destination: "/todo",
-    //             permanent: true,
-    //         },
-    //     ];
-    // },
+    output: "standalone",
 };
 
 module.exports = nextConfig;
