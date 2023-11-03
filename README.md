@@ -1,3 +1,4 @@
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
@@ -34,3 +35,30 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+
+## Deploy on Docker
+
+Sharing the code for any device and can access code from multi-platform. Docker can solve this problem and share your code to developer team. Following this flow to running code on Docker container:
+#### Build docker container
+Create or make sure Docker file with following content:
+
+    FROM node:19
+    
+    WORKDIR /app
+    COPY package*.json ./
+    RUN npm install
+    COPY . .
+    EXPOSE 3000
+    CMD npm run dev
+
+
+- You can change `node` version adjust to `node` minimum version.
+- Change expose value to change port when running
+- Customize `Dockerfile` to maximize application performance and development process
+
+#### Running docker 
+After container builded, you can running docker container on Docker Desktop or command line
+
+`docker run -p 3000:3000 next-todo-list`
+
+:crossed_swords:HappyCoding
