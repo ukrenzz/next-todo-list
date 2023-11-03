@@ -58,7 +58,7 @@ const handleUpdateTask = () => {};
 const handleDeleteTask = () => {};
 const handleCompleteTask = () => {};
 
-function Home() {
+function TodoPage() {
     const [todos, setTodos] = useState<TodoType[]>(defaultTodo);
     const [todo, setTodo] = useState<TodoType>();
     const [isEdit, setIsEdit] = useState<boolean>(false);
@@ -88,6 +88,7 @@ function Home() {
         console.log("Delete Function");
     };
 
+    // TODO: Convert all isComplete tasks to boolean
     useEffect(() => {
         if (!isLoading && tasks != undefined) {
             setTodos(tasks.data);
@@ -166,4 +167,4 @@ function Home() {
     );
 }
 
-export default Home;
+export default TodoPage;
