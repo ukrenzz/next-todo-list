@@ -8,9 +8,7 @@ const API_URL = process.env.API_URL;
 export async function GET() {
     const response = new ApiResponse();
     try {
-        const result = await pool.query(
-            "SELECT id, task, IF(isComplete = 0, 'false', 'true') as isComplete FROM tasks"
-        );
+        const result = await pool.query("SELECT * FROM tasks");
 
         response.update(200, "Fetch all task successfully", result);
 
@@ -46,7 +44,7 @@ export async function POST(request: NextRequest) {
         if (affectedRows > 0 && insertId > 0) {
             // Read data by ID
             const result = await pool.query(
-                "SELECT id, task, IF(isComplete = 0, 'false', 'true') as isComplete FROM tasks WHERE id = ?",
+                "SELECT * FROM tasks WHERE id = ?",
                 insertId
             );
 
