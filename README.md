@@ -39,7 +39,7 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 ## Deploy on Docker
 
 Sharing the code for any device and can access code from multi-platform. Docker can solve this problem and share your code to developer team. Following this flow to running code on Docker container:
-#### Build docker container
+#### Create Dockerfile
 Create or make sure Docker file with following content:
 
     FROM node:19
@@ -55,6 +55,11 @@ Create or make sure Docker file with following content:
 - You can change `node` version adjust to `node` minimum version.
 - Change expose value to change port when running
 - Customize `Dockerfile` to maximize application performance and development process
+
+#### Build docker container
+Run following command on `next-todo-list` directory :
+
+`docker build -t next-todo-list`
 
 #### Running docker 
 After container builded, you can running docker container on Docker Desktop or command line
