@@ -8,7 +8,7 @@ const API_URL = process.env.API_URL;
 export async function GET() {
     const response = new ApiResponse();
     try {
-        const result = await pool.query("SELECT * FROM tasks");
+        const result = await pool.query("SELECT * FROM tasks ORDER BY id DESC");
 
         response.update(200, "Fetch all task successfully", result);
 
