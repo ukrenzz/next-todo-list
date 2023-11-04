@@ -4,5 +4,5 @@ WORKDIR /app
 COPY package*.json ./
 RUN npm install
 COPY . .
-EXPOSE 3331
-CMD npm run dev 
+EXPOSE 3003
+CMD npm run dev -- --port 3003
