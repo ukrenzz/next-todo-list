@@ -46,7 +46,7 @@ const TodoList = ({ onEdit, onDelete, onComplete }: ITodoListProps) => {
             {isLoading ? (
                 <LoadingBox />
             ) : taskError ? (
-                <div className="">{taskError}</div>
+                <div className="">{taskError.toString()}</div>
             ) : (
                 tasks?.data?.map((todo: TodoType) => (
                     <div
