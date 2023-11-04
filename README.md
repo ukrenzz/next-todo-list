@@ -43,13 +43,13 @@ Sharing the code for any device and can access code from multi-platform. Docker 
 Create or make sure Docker file with following content:
 
     FROM node:19
-    
+
     WORKDIR /app
     COPY package*.json ./
     RUN npm install
     COPY . .
-    EXPOSE 3000
-    CMD npm run dev
+    EXPOSE 3003
+    CMD npm run dev -- --port 3003
 
 
 - You can change `node` version adjust to `node` minimum version.
@@ -65,5 +65,12 @@ Run following command on `next-todo-list` directory :
 After container builded, you can running docker container on Docker Desktop or command line
 
 `docker run -p 3000:3000 next-todo-list`
+
+#### Build container 
+Database server using mysql and split container with phpmyadmin. Make sure the docker-composer.yml already have 3 service, that is: mysql_srv, phpmyadmin_srv and app_srv. All service will merge to `next-todo-list` container. Following this command to build all service container:
+
+`docker-compose up --build`
+
+Wait until all service installed and ready for development.
 
 :crossed_swords:HappyCoding
