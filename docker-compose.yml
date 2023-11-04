@@ -35,7 +35,7 @@ services:
             MYSQL_HOST_IP: mysql_srv
             MYSQL_USER: root
             MYSQL_DATABASE: db_todo
-            MYSQL_PASSWORD: 
+            MYSQL_PASSWORD: root
         ports:
             - 3003:3003
 volumes:
