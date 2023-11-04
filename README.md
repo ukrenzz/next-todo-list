@@ -15,7 +15,7 @@ pnpm dev
 bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3003](http://localhost:3003) with your browser to see the result.
 
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
@@ -64,13 +64,14 @@ Run following command on `next-todo-list` directory :
 #### Running docker 
 After container builded, you can running docker container on Docker Desktop or command line
 
-`docker run -p 3000:3000 next-todo-list`
+`docker run -p 3003:3003 next-todo-list`
 
 #### Build container 
 Database server using mysql and split container with phpmyadmin. Make sure the docker-composer.yml already have 3 service, that is: mysql_srv, phpmyadmin_srv and app_srv. All service will merge to `next-todo-list` container. Following this command to build all service container:
 
 `docker-compose up --build`
 
-Wait until all service installed and ready for development.
+Wait until all service installed and ready for development. After all finish, you can open in browser [http://localhost:3003](http://localhost:3003) to manage your todo list.
 
 :crossed_swords:HappyCoding
+
